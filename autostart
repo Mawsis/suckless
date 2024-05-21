@@ -1,4 +1,5 @@
 #!/bin/sh
-feh --bg-fill /home/mawsis/suckless/neon.jpg &
+feh --bg-fill /home/mawsis/suckless/od_neon_warm.png &
 picom &
+slstatus &
 dwm

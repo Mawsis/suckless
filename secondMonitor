@@ -1,4 +1,4 @@
 #!/bin/sh
 xrandr --output "HDMI-1-1" --auto --right-of "eDP" &
-feh --bg-fill /home/mawsis/suckless/neon.jpg 
+feh --bg-fill /home/mawsis/suckless/od_neon_warm.png 
 
