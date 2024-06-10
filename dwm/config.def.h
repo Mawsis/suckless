@@ -7,6 +7,8 @@ static const unsigned int gappx     = 16;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+static const int vertpad            = 10;       /* vertical padding of bar */
+static const int sidepad            = 10;       /* horizontal padding of bar */
 static const char *fonts[]          = { "0xProto Nerd Font:pixelsize=20" };
 static const char dmenufont[]       = "0xProto Nerd Font:pixelsize=20";
 //write colors from the one dark them
@@ -19,8 +21,8 @@ static const char col_blue[]        = "#61afef";
 static const char col_magenta[]     = "#c678dd";
 static const char col_cyan[]        = "#56b6c2";
 
-static const char main_color[]      = "#e06c75";
-static const char secondary_color[] = "#98c379";
+static const char main_color[]      = "#61afef";
+static const char secondary_color[] = "#e06c75";
 
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -35,7 +37,7 @@ static const char *tagsel[][2] = {
   { main_color,  secondary_color }, /* has pinned tag */
 };
 /* tagging */
-static const char *tags[] = { "", "", "", "", "󰇮", "", "", "", "" };
+static const char *tags[] = { " ", " ", " ", " ", "󰇮 ", " ", " ", " ", " " };
 
 
 static const Rule rules[] = {
@@ -80,6 +82,7 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *screenshot[]  = { "spectacle", NULL };
 static const char *browser[]  = { "firefox", NULL };
 static const char *notes[]  = { "obsidian", NULL };
+static const char *discord[]  = { "discord", NULL };
 
 static const char *upvol[]      = { "/usr/bin/pactl",   "set-sink-volume", "0",      "+5%",      NULL };
 static const char *downvol[]    = { "/usr/bin/pactl",   "set-sink-volume", "0",      "-5%",      NULL };
@@ -93,11 +96,12 @@ static const Key keys[] = {
 	{ 0,                            XK_Print,  spawn,          {.v = screenshot } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = browser } },
 	{ MODKEY,                       XK_o,      spawn,          {.v = notes } },
+	{ MODKEY,                       XK_d,      spawn,          {.v = discord } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_n,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },

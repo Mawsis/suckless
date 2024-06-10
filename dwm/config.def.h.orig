@@ -1,33 +1,41 @@
 /* See LICENSE file for copyright and license details. */
+#include <X11/XF86keysym.h>
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const unsigned int gappx     = 6;        /* gaps between windows */
+static const unsigned int gappx     = 16;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "0xProto Nerd Font Mono:size=14" };
-static const char dmenufont[]       = "0xProto Nerd Font Mono:size=14";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char *fonts[]          = { "0xProto Nerd Font:pixelsize=20" };
+static const char dmenufont[]       = "0xProto Nerd Font:pixelsize=20";
+//write colors from the one dark them
+static const char col_bg[]          = "#282c34";
+static const char col_fg[]          = "#abb2bf";
+static const char col_red[]         = "#e06c75";
+static const char col_green[]       = "#98c379";
+static const char col_yellow[]      = "#e5c07b";
+static const char col_blue[]        = "#61afef";
+static const char col_magenta[]     = "#c678dd";
+static const char col_cyan[]        = "#56b6c2";
+
+static const char main_color[]      = "#61afef";
+static const char secondary_color[] = "#e06c75";
+
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeNorm] = { col_fg, col_bg, col_bg },
+	[SchemeSel]  = { col_fg, main_color,  main_color  },
 };
-
 static const char *tagsel[][2] = {
    /*   fg         bg    */
-  { col_gray3, col_gray1 }, /* norm */
-  { col_gray4, col_cyan  }, /* sel */
-  { col_cyan,  col_gray1 }, /* occ but not sel */
-  { col_cyan,  col_gray3 }, /* has pinned tag */
+  { col_fg, col_bg }, /* norm */
+  { main_color, col_bg  }, /* sel */
+  { secondary_color,  col_bg }, /* occ but not sel */
+  { main_color,  secondary_color }, /* has pinned tag */
 };
 /* tagging */
-static const char *tags[] = { "", "", "", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { " ", " ", " ", " ", "󰇮 ", " ", " ", " ", " " };
 
 
 static const Rule rules[] = {
@@ -49,9 +57,9 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
+	{ "󰋁",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+	{ "󰹑",      monocle },
 };
 
 /* key definitions */
@@ -67,18 +75,31 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", "#ffffff" , "-sb", main_color, "-sf", "#ffffff", NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *screenshot[]  = { "spectacle", NULL };
+static const char *browser[]  = { "firefox", NULL };
+static const char *notes[]  = { "obsidian", NULL };
+static const char *discord[]  = { "discord", NULL };
+
+static const char *upvol[]      = { "/usr/bin/pactl",   "set-sink-volume", "0",      "+5%",      NULL };
+static const char *downvol[]    = { "/usr/bin/pactl",   "set-sink-volume", "0",      "-5%",      NULL };
+static const char *mutevol[]    = { "/usr/bin/pactl",   "set-sink-mute",   "0",      "toggle",   NULL };
+
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ 0,                            XK_Print,  spawn,          {.v = screenshot } },
+	{ MODKEY,                       XK_w,      spawn,          {.v = browser } },
+	{ MODKEY,                       XK_o,      spawn,          {.v = notes } },
+	{ MODKEY,                       XK_d,      spawn,          {.v = discord } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_n,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
@@ -105,7 +126,12 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ 0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
+	{ 0,                       XF86XK_AudioMute, spawn, {.v = mutevol } },
+	{ 0,                       XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
 };
+
+
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
