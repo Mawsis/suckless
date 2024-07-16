@@ -1,5 +1,5 @@
 #!/bin/sh
-feh --bg-fill /home/mawsis/suckless/od_neon_warm.png &
+feh --bg-fill /home/mawsis/suckless/eva.png &
 picom &
 slstatus &
 dwm
