@@ -2,4 +2,7 @@
 feh --bg-fill /home/mawsis/suckless/eva.png &
 picom &
 slstatus &
+if xrandr | grep " connected" | grep -v " primary"; then
+  /home/mawsis/suckless/secondMonitor &
+fi
 dwm
