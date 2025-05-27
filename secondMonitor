@@ -1,4 +1,6 @@
 #!/bin/sh
-xrandr --output "HDMI-1-1" --auto --left-of "eDP" &
-feh --bg-fill /home/mawsis/suckless/eva.png
-
+# Remove the trailing & to ensure command completes
+xrandr --output "eDP-1-1" --right-of "HDMI-0" --output "HDMI-0" --mode 1920x1080 --rate 60
+# Add --auto to enable the display with preferred mode
+xrandr --output "eDP-1-1" --auto
+feh --bg-fill /home/mawsis/suckless/mountainsPurple.png

@@ -5,24 +5,29 @@
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int gappx     = 16;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const int showbar            = 1;        /* 0 means no bar */
+static const int showbar            = 0;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
 static const char *fonts[]          = { "0xProto Nerd Font:pixelsize=20" };
 static const char dmenufont[]       = "0xProto Nerd Font:pixelsize=20";
 //write colors from the one dark them
-static const char col_bg[]          = "#282c34";
-static const char col_fg[]          = "#abb2bf";
-static const char col_red[]         = "#e06c75";
-static const char col_green[]       = "#98c379";
-static const char col_yellow[]      = "#e5c07b";
-static const char col_blue[]        = "#61afef";
-static const char col_magenta[]     = "#c678dd";
-static const char col_cyan[]        = "#56b6c2";
+/* Base */
+static const char col_bg[]          = "#0a0a0e";   // Background (deep near-black)
+static const char col_fg[]          = "#b6bcde";   // Foreground (soft lavender-gray)
 
-static const char main_color[]      = "#61afef";
-static const char secondary_color[] = "#e06c75";
+/* ANSI slots repurposed */
+static const char col_red[]         = "#289bcc";   // “Red” → icy blue accent
+static const char col_green[]       = "#26bf75";   // “Green” → teal accent
+static const char col_yellow[]      = "#898f99";   // “Yellow” → silver/gray accent
+static const char col_blue[]        = "#5c69af";   // “Blue” → primary purple
+static const char col_magenta[]     = "#939de5";   // “Magenta” → softer periwinkle
+static const char col_cyan[]        = "#5c69af";   // “Cyan” → (also primary purple)
+
+/* Your key UI highlights */
+static const char main_color[]      = "#5c69af";   // Primary purple
+static const char secondary_color[] = "#289bcc";   // Icy blue accent
+
 
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -77,7 +82,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", "#ffffff" , "-sb", main_color, "-sf", "#ffffff", NULL };
+static const char *dmenucmd[] = { "rofi", "-show", "drun", NULL };
 static const char *termcmd[]  = { "kitty", NULL };
 static const char *screenshot[]  = { "spectacle", NULL };
 static const char *browser[]  = { "firefox", NULL };

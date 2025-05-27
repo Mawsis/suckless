@@ -1,8 +1,11 @@
 #!/bin/sh
 picom &
 slstatus &
-if xrandr | grep " connected" | grep -v " primary"; then
-  /home/mawsis/suckless/secondMonitor &
+# More reliable check for secondary monitor
+if xrandr | grep "eDP-1-1 connected"; then
+  # Execute script without background process
+  /home/mawsis/suckless/secondMonitor
+else
+  feh --bg-fill /home/mawsis/suckless/mountainsPurple.png &
 fi
-feh --bg-fill /home/mawsis/suckless/eva.png &
 dwm
